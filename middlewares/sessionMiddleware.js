@@ -3,7 +3,7 @@ import fetch from 'isomorphic-unfetch';
 import { LOAD, LOGIN } from '../constants/ActionTypes';
 import { loginSuccess, updateCurrentUser, updateTokenSuccess } from '../actions/sessionActions';
 
-import * as Config from '../config/app';
+import * as Config from '../config/app.json';
 
 const SPOTIFY_API_BASE = 'https://api.spotify.com/v1';
 

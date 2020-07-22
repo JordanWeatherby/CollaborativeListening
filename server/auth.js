@@ -3,8 +3,8 @@ const querystring = require('querystring');
 const request = require('request');
 
 const Router = express.Router;
-const AppConfig = require('../config/app');
-const AuthConfig = require('../config/auth');
+const AppConfig = require('../config/app.json');
+const AuthConfig = require('../config/auth.json');
 
 const redirect_uri = `${AppConfig.HOST}/auth/callback`;
 const client_id = AuthConfig.CLIENT_ID;
@@ -77,7 +77,9 @@ auth.get('/callback', function(req, res) {
 
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
-        var access_token = body.access_token, refresh_token = body.refresh_token, expires_in = body.expires_in;
+        var access_token = body.access_token,
+          refresh_token = body.refresh_token,
+          expires_in = body.expires_in;
 
         res.cookie('refresh_token', refresh_token, {
           maxAge: 30 * 24 * 3600 * 1000
@@ -115,7 +117,8 @@ auth.post('/token', function(req, res) {
     };
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
-        var access_token = body.access_token, expires_in = body.expires_in;
+        var access_token = body.access_token,
+          expires_in = body.expires_in;
 
         res.setHeader('Content-Type', 'application/json');
         res.send(
