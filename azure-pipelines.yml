@@ -10,10 +10,10 @@ variables:
 
   # Azure Resource Manager connection created during pipeline creation
   azureSubscription: '3787c974-d126-42ea-9cb0-7bec3e11ef00'
-  
+
   # Web app name
   webAppName: 'collaborativelistening-prod'
-  
+
   # Environment name
   environmentName: 'collaborativelistening-prod'
 
@@ -23,17 +23,17 @@ variables:
 stages:
 - stage: Build
   displayName: Build stage
-  jobs:  
+  jobs:
   - job: Build
     displayName: Build
     pool:
       vmImage: $(vmImageName)
-      
+
     steps:
     - task: FileTransform@2
       inputs:
         folderPath: '$(System.DefaultWorkingDirectory)'
-        xmlTransformationRules: 
+        xmlTransformationRules:
         jsonTargetFiles: |
           **/auth.json
           **/app.json
@@ -54,12 +54,12 @@ stages:
 - stage: Deploy
   displayName: Deploy stage
   dependsOn: Build
-  condition: succeeded()
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
   - deployment: Deploy
     displayName: Deploy
     environment: $(environmentName)
-    pool: 
+    pool:
       vmImage: $(vmImageName)
     strategy:
       runOnce:
@@ -74,6 +74,3 @@ stages:
               package: '$(Pipeline.Workspace)/drop/'
               runtimeStack: 'NODE|12-lts'
               startUpCommand: 'npm run start'
-
-
-          
