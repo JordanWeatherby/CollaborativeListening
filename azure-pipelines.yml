@@ -39,17 +39,8 @@ stages:
         npm install
         npm run build
       displayName: 'npm install and build '
-      
-    - task: ArchiveFiles@2
-      displayName: 'Archive files'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-        includeRootFolder: false
-        archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-        replaceExistingArchive: true
 
-    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+    - upload: $(System.DefaultWorkingDirectory)
       artifact: drop
 
 - stage: Deploy
@@ -68,7 +59,7 @@ stages:
           steps:
           - task: FileTransform@2
             inputs:
-              folderPath: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+              folderPath: '$(Pipeline.Workspace)/drop/'
               xmlTransformationRules: 
               jsonTargetFiles: |
                 **/auth.json
@@ -80,7 +71,7 @@ stages:
               azureSubscription: '$(azureSubscription)'
               appType: 'webAppLinux'
               appName: '$(webAppName)'
-              package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+              package: '$(Pipeline.Workspace)/drop/'
               runtimeStack: 'NODE|12-lts'
               startUpCommand: 'npm run start'
 
