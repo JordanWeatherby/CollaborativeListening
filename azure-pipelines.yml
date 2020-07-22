@@ -68,7 +68,7 @@ stages:
           steps:
           - task: FileTransform@2
             inputs:
-              folderPath: '$(System.DefaultWorkingDirectory)/**/*.zip'
+              folderPath: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
               xmlTransformationRules: 
               jsonTargetFiles: |
                 **/auth.json
