@@ -30,6 +30,14 @@ stages:
       vmImage: $(vmImageName)
       
     steps:
+    - task: FileTransform@2
+      inputs:
+        folderPath: '$(Pipeline.Workspace)/drop/'
+        xmlTransformationRules: 
+        jsonTargetFiles: |
+          **/auth.json
+          **/app.json
+
     - task: NodeTool@0
       inputs:
         versionSpec: '12.x'
@@ -57,14 +65,6 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: FileTransform@2
-            inputs:
-              folderPath: '$(Pipeline.Workspace)/drop/'
-              xmlTransformationRules: 
-              jsonTargetFiles: |
-                **/auth.json
-                **/app.json
-                
           - task: AzureWebApp@1
             displayName: 'Azure Web App Deploy: $(webAppName)'
             inputs:
