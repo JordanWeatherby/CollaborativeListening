@@ -65,7 +65,15 @@ stages:
     strategy:
       runOnce:
         deploy:
-          steps:            
+          steps:
+          - task: FileTransform@2
+            inputs:
+              folderPath: '$(System.DefaultWorkingDirectory)/**/*.zip'
+              xmlTransformationRules: 
+              jsonTargetFiles: |
+                **/auth.json
+                **/app.json
+                
           - task: AzureWebApp@1
             displayName: 'Azure Web App Deploy: $(webAppName)'
             inputs:
@@ -75,3 +83,6 @@ stages:
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
               runtimeStack: 'NODE|12-lts'
               startUpCommand: 'npm run start'
+
+
+          
