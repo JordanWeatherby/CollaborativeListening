@@ -2,7 +2,7 @@ import { VOTE_UP, LOGIN_SUCCESS, QUEUE_REMOVE_TRACK, QUEUE_TRACK } from '../cons
 import { updateUsers } from '../actions/usersActions';
 import { updateQueue, queueEnded } from '../actions/queueActions';
 import { playTrack, updateNowPlaying } from '../actions/playbackActions';
-import Config from '../config/app';
+import Config from '../config/app.json';
 
 import io from 'socket.io-client';
 

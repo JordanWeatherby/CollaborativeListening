@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 
-import Config from '../config/app';
+import Config from '../config/app.json';
 import * as types from '../constants/ActionTypes';
 
 export const queueTrack = id => ({ type: types.QUEUE_TRACK, id });
@@ -12,4 +12,6 @@ export const queueRemoveTrack = id => ({
 });
 
 export const fetchQueue = () => dispatch =>
-  fetch(`${Config.HOST}/api/queue`).then(res => res.json()).then(res => dispatch(updateQueue(res)));
+  fetch(`${Config.HOST}/api/queue`)
+    .then(res => res.json())
+    .then(res => dispatch(updateQueue(res)));

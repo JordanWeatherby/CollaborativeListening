@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 
-import Config from '../config/app';
+import Config from '../config/app.json';
 import * as types from '../constants/ActionTypes';
 
 // playback

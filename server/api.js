@@ -2,7 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const SpotifyWebApi = require('spotify-web-api-node');
 
-const AuthConfig = require('../config/auth');
+const AuthConfig = require('../config/auth.json');
 
 const Bot = require('./models/Bot');
 const QueueItem = require('./models/QueueItem');
@@ -210,8 +210,14 @@ const exportedApi = io => {
         } else {
           // remove user from users
           users.splice(userIndex, 1);
-          socket.emit('update users', users.map(u => u.user));
-          socket.broadcast.emit('update users', users.map(u => u.user));
+          socket.emit(
+            'update users',
+            users.map(u => u.user)
+          );
+          socket.broadcast.emit(
+            'update users',
+            users.map(u => u.user)
+          );
         }
       }
     });
