@@ -33,7 +33,21 @@ class ResultsList extends Component {
           .flex-item {
             flex-grow: 1;
           }
-
+          .explicit {
+            align-items: center;
+            background-color: #d9d9d9;
+            border-radius: 2px;
+            display: inline-flex;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            text-transform: uppercase;
+            font-size: 9px;
+            line-height: 10px;
+            min-width: 16px;
+            height: 16px;
+            padding: 0 2px;
+          }
           .song-name {
             font-size: 1.3em;
             margin-bottom: 0.3em;
@@ -52,7 +66,7 @@ class ResultsList extends Component {
                 <div className="flex-item">
                   <div className="song-name">{r.name}</div>
                   <div>{r.artists[0].name}</div>
-                  {r.explicit && <div>Explicit</div>}
+                  {r.explicit && <div className="explicit">E</div>}
                 </div>
               </div>
             </li>
